@@ -96,6 +96,9 @@ const opts = {
     db_host:    '127.0.0.1',
     db_port:    27017,
     db_name:    'node_analytics_db',
+    db_username: null,
+    db_pass:     null,
+    db_auth:     false,
     ws_port:    8080,
     ws_server:  false,
     s_io:       false,
@@ -141,9 +144,15 @@ log("don't forget to copy", chalk.red('node-analytics-client.js'), "to public di
 function mongoDB(cb){
 
     // Connect to MongoDB
-    const db_url = 'mongodb://' + opts.db_host + ':' + opts.db_port + '/' + opts.db_name;
+    if(opts.db_auth)
+        var db_url = 'mongodb://' + opts.db_username + ':' + opts.db_pass + '@' + opts.db_host + ':' + opts.db_port + '/' + opts.db_name;
+    
+    else
+        var db_url = 'mongodb://' + opts.db_host + ':' + opts.db_port + '/' + opts.db_name; 
 
     db = mongoose.connection;
+
+    log(db_url);
 
     const db_connect = setTimeout(() => {
         log(chalk.cyan('mongoose.connect'));
