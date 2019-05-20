@@ -81,6 +81,9 @@ Key | Description | Default
 `db_host` | MongoDB host | `'localhost'`
 `db_port` | MongoDB port | `27017`
 `db_name` | MongoDB database name | `'node_analytics_db'`
+`db_auth` | Connection requires authentication | `false`
+`db_username` | DB username; enabled if `db_auth` is set ) | `null`
+`db_pass` | DB user's password; enabled if `db_auth` is set) | `null`
 `ws_port` | WebSocket port; disabled if `ws_server` or `s_io` is set | `8080`
 `ws_server` | Express server object; disabled if `s_io` is set | `null`
 `s_io` | socket.io server object | `null`
@@ -98,7 +101,10 @@ var server = require('http').createServer(app);
 server.listen(80);
 
 app.use(analytics({
-  ws_server:  server
+  ws_server:  server,
+  db_auth : true,
+  db_user : 'username',
+  db_pass : 'password'
 }));
 ```
 
